@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.redisdemoproject
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle_kotlin
+features: [annotation-api, app-name, data, data-jpa, gradle, h2, hibernate-jpa, hibernate-validator, http-client-test, java, java-application, jdbc-hikari, json-schema, json-schema-validation, junit, logback, lombok, micronaut-aot, micronaut-build, micronaut-http-validation, netty-server, properties, readme, serialization-jackson, shade, static-resources]

@@ -1,0 +1,8 @@
+micronaut:
+  session:
+    http:
+      redisson:
+        enabled: true
+        update-mode: "WRITE_BEHIND"
+        single-server-config:
+        address: "redis://127.0.0.1:6380"
