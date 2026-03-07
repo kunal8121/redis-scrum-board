@@ -54,7 +54,7 @@ public class TaskRepo implements Repository<Task> {
     }
 
     @Override
-    public Task update(String id,Task entity) {
+    public Task update(UUID id,Task entity) {
         RJsonBucket<Task> oldTaskBucket = redissonClient.getJsonBucket(PREFIX + id, jsonCodec);
         if (!oldTaskBucket.isExists()) {
             throw  new NoSuchElementException("Element Not Found with id : %s".formatted(id));
@@ -119,7 +119,7 @@ public class TaskRepo implements Repository<Task> {
 
 
     @Override
-    public void delete(String id) {
+    public void delete(UUID id) {
         redissonClient.getJsonBucket(PREFIX+id, jsonCodec).delete();
     }
 

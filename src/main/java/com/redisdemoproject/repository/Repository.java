@@ -9,7 +9,7 @@ public interface Repository<T> {
 
     T save(T entity);
 
-    T update(String id, T entity);
+    T update(UUID id, T entity);
 
     T getById(UUID id);
 
@@ -17,5 +17,5 @@ public interface Repository<T> {
 
     List<T> query(QueryOptions queryOptions);
 
-    void delete(String id);
+    void delete(UUID id);
 }

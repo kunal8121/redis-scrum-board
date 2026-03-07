@@ -48,11 +48,11 @@ public class TaskService {
             .updatedAt(Instant.now())
             .build();
 
-        return taskRepo.update(String.valueOf(id), updated);
+        return taskRepo.update(id, updated);
     }
 
     public void deleteTaskById(UUID id) {
-        taskRepo.delete(String.valueOf(id));
+        taskRepo.delete(id);
     }
 
     public List<Task> queryTasks(QueryOptions queryOptions) {
