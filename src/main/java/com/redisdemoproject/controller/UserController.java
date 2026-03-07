@@ -35,33 +35,34 @@ public class UserController {
         return userService.updateUser(id, spec);
     }
 
+    @Get("/query")
     public List<User> query(
             @QueryValue @Nullable  String name,
             @QueryValue @Nullable String email,
             @QueryValue @Nullable Role role,
             @Min(1) @QueryValue int pageSize,
-            @Min(0) @QueryValue int offSet ) {
+            @Min(0) @QueryValue int offset) {
 
         QueryOptions.QueryOptionsBuilder queryBuilder = QueryOptions.builder();
         Map<String, String> filters = new HashMap<>();
 
         Optional.ofNullable(name).ifPresent(val ->
-                filters.put(Filters.STATUS, String.valueOf(val)));
+                filters.put(Filters.NAME, String.valueOf(val)));
 
         Optional.ofNullable(email).ifPresent(val ->
-                filters.put(Filters.PRIORITY, String.valueOf(val)));
+                filters.put(Filters.EMAIL, String.valueOf(val)));
 
         Optional.ofNullable(role).ifPresent(val ->
-                filters.put(Filters.DESCRIPTION, String.valueOf(val)));
+                filters.put(Filters.ROLE, String.valueOf(val)));
 
         queryBuilder.filters(filters);
         Optional.of(pageSize).ifPresent(queryBuilder::pageSize);
-        Optional.of(offSet).ifPresent(queryBuilder::offset);
+        Optional.of(offset).ifPresent(queryBuilder::offset);
 
         return userService.queryAll(queryBuilder.build());
     }
 
-    @Delete("{/id")
+    @Delete("/{id}")
     public void delete(@PathVariable UUID id) {
         userService.delete(id);
     }
