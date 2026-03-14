@@ -82,7 +82,7 @@ public class UserRepository implements Repository<User>{
                             redissonClient.getJsonBucket(doc.getId(), jsonCodec);
                     return userBucket.get();
                 })
-                .toList  ();
+                .toList();
     }
 
     @Override
@@ -110,10 +110,24 @@ public class UserRepository implements Repository<User>{
         return new FieldIndex[] {
                 FieldIndex.tag("$.id").caseSensitive().as("id"),
                 FieldIndex.tag("$.name").caseSensitive().as("name"),
+                FieldIndex.tag("$.password").caseSensitive().as("password"),
                 FieldIndex.tag("$.email").caseSensitive().as("email"),
                 FieldIndex.tag("$.role").caseSensitive().as("role"),
                 FieldIndex.numeric("$.yearsOfExperience").as("years_of_experience").sortMode(SortMode.NORMALIZED),
         };
+    }
+
+    public List<User> findByUsername(String username) {
+          String query = String.format("@name:{%s}", username);
+          var searchResult = redissonSearch
+                  .search(INDEX, query, org.redisson.api.search.query.QueryOptions.defaults()
+                        .limit(0, 10));
+          return searchResult.getDocuments().stream()
+                  .map(doc ->{
+                      RJsonBucket<User> userBucket =
+                              redissonClient.getJsonBucket(doc.getId(), jsonCodec);
+                      return userBucket.get();
+                  }).toList();
     }
 
     private void updateIndex() {

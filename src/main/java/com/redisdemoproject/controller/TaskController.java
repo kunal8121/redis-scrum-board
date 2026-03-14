@@ -19,6 +19,8 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import jakarta.validation.Valid;
 
 import java.util.*;
@@ -28,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller("/api/{version}/task")
 @ExecuteOn(TaskExecutors.BLOCKING)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @RequiredArgsConstructor
 public class TaskController {
     private static final String VERSION01 = "1";
