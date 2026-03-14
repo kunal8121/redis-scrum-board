@@ -8,6 +8,7 @@ import com.redisdemoproject.repository.UserRepository;
 import jakarta.inject.Singleton;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ public class UserService {
 
     private static final int OFFSET = 0;
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     public User registerUser(@Valid UserCreateSpec spec) {
         UUID id = UUID.randomUUID();
@@ -24,6 +26,7 @@ public class UserService {
                 .id(id)
                 .emailId(spec.emailId())
                 .name(spec.name())
+                .password(encoder.encode(spec.password()))
                 .role(assignRole(spec.yearsOfExperience()))
                 .build();
 
@@ -47,6 +50,7 @@ public class UserService {
         User updatedUser = User.builder()
                 .id(id)
                 .name(spec.name())
+                .password(encoder.encode(spec.password()))
                 .role(assignRole(spec.yearsOfExperience()))
                 .emailId(spec.emailId())
                 .build();

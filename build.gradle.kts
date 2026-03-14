@@ -37,6 +37,9 @@ dependencies {
     // Source: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.1")
     implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("org.springframework.security:spring-security-crypto:6.4.5")
+    implementation("org.slf4j:jcl-over-slf4j:2.0.9")
 
 
 

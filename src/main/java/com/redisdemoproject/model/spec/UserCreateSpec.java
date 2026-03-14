@@ -10,6 +10,9 @@ public record UserCreateSpec (
         @JsonProperty("name")
         @NotBlank
         String name,
+        @JsonProperty("password")
+        @NotBlank(message = "Password cannot be blank")
+        String password,
         @Pattern(
                 regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
                 message = "Email format is incorrect"
