@@ -6,3 +6,21 @@ micronaut:
         update-mode: "WRITE_BEHIND"
         single-server-config:
         address: "redis://127.0.0.1:6380"
+
+  security:
+    enabled: true
+    basic-auth:
+      enabled: false
+    authentication: bearer # Use Bearer tokens for login responses
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: ${JWT_GENERATOR_SIGNATURE_SECRET}
+              jws-algorithm: HS256
+    password:
+      encoder:
+        bcrypt:
+          enabled: true
