@@ -22,22 +22,17 @@ public interface TaskMapper {
     @Mapping(target = "id", expression = "java(UUID.randomUUID())")
     @Mapping(target = "status", constant = "PENDING")
     @Mapping(target = "createdAt", expression = "java(Instant.now())")
-    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "updatedAt", expression = "java(Instant.now())")
     @Mapping(target = "taskDetails", expression= "java(mapTaskType(spec.taskType(), spec.taskDetails()))")
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     Task toEntity(TaskCreateSpec spec);
 
     default TaskDetails mapTaskType(TaskType taskType, TaskDetailsSpec taskDetails) {
-            return switch (taskType) {
-                case BUG -> toBugEntity((TaskDetailsSpec.BugDetailsSpec) taskDetails);
-                case FEATURE -> toFeatureEntity((TaskDetailsSpec.FeatureDetailsSpec) taskDetails);
-            };
-
-//        if (TaskType.BUG.equals(type)) {
-//            return toBugEntity((TaskDetailsSpec.BugDetailsSpec) taskDetails);
-//        } else if (TaskType.FEATURE.equals(type)) {
-//            return toFeatureEntity((TaskDetailsSpec.FeatureDetailsSpec) taskDetails);
-//        }
-//        return null;
+        return switch (taskType) {
+            case BUG -> toBugEntity((TaskDetailsSpec.BugDetailsSpec) taskDetails);
+            case FEATURE -> toFeatureEntity((TaskDetailsSpec.FeatureDetailsSpec) taskDetails);
+        };
     }
 
     TaskDetails.Bug toBugEntity(TaskDetailsSpec.BugDetailsSpec spec);
