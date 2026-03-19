@@ -2,9 +2,11 @@ package com.redisdemoproject.model.response;
 
 import com.fasterxml.jackson.annotation.*;
 import com.redisdemoproject.model.Priority;
+import com.redisdemoproject.model.Status;
 import com.redisdemoproject.model.TaskType;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import static com.redisdemoproject.utils.DateTimeFormat.DATE_TIME_FORMAT;
 
@@ -28,7 +30,12 @@ public record RestTaskResponse(
         })
         @JsonUnwrapped
         @JsonProperty("task_details") RestTaskDetailsResponse taskDetails,
+        @JsonProperty("status") Status status,
         @JsonFormat(pattern = DATE_TIME_FORMAT, timezone = "UTC")
-        @JsonProperty("created_at")  Instant createdAt
+        @JsonProperty("created_at")  Instant createdAt,
+        @JsonProperty("created_by") UUID createdBy,
+        @JsonFormat(pattern = DATE_TIME_FORMAT, timezone = "UTC")
+        @JsonProperty("updated_at") Instant updatedAt,
+        @JsonProperty("updated_by") UUID updatedBy
 ) {
 }

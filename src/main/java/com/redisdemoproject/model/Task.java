@@ -33,12 +33,11 @@ public class Task {
             @JsonSubTypes.Type(value = TaskDetails.Feature.class, name = "FEATURE")
     })
     private TaskDetails taskDetails;
-
-    private Instant createdAt;
-
     private Instant dueAt;
-
-    private Instant updatedAt;
     private Status status;
+    private Instant createdAt;
+    private UUID createdBy;
+    private Instant updatedAt;
+    private UUID updatedBy;
 }
 

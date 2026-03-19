@@ -20,6 +20,7 @@ import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.rules.SecurityRule;
 import jakarta.validation.Valid;
 
@@ -38,8 +39,8 @@ public class TaskController {
 
     @Version(VERSION01)
     @Post()
-    public RestTaskResponse create(@Body @Valid TaskCreateSpec spec) {
-        Task task =  taskService.createTask(spec);
+    public RestTaskResponse create(@Body @Valid TaskCreateSpec spec, Authentication authentication) {
+        Task task =  taskService.createTask(spec, authentication);
         return TaskMapper.INSTANCE.toRest(task); 
     }
 
@@ -103,8 +104,8 @@ public class TaskController {
 
     @Version(VERSION01)
     @Put("{id}")
-    public Task update(@Valid @Body TaskCreateSpec spec, @PathVariable UUID id) {
-        return taskService.updateTask(id, spec);
+    public Task update(@Valid @Body TaskCreateSpec spec, @PathVariable UUID id, Authentication authentication) {
+        return taskService.updateTask(id, spec, authentication);
     }
 
     @Delete("{id}")
