@@ -13,7 +13,10 @@ import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Singleton
@@ -38,7 +41,10 @@ public class CustomAuthProvider implements HttpRequestAuthenticationProvider<Obj
         if (user.isPresent()) {
             // If user is found and password matches, return a successful authentication response
             log.info("User Authenticated successfully: {}", username);
-            return AuthenticationResponse.success(username);
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", user.get().getId());
+            claims.put("role", user.get().getRole().name());
+            return AuthenticationResponse.success(username, claims);
         } else {
             // If user is not found or password does not match, return an authentication failure response
             return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
